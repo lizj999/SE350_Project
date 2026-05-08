@@ -15,11 +15,7 @@
 
 ### Project: Stock Trading Platform
 
-A terminal based stock trading platform where users can view stocks, 
-
-buy and sell shares, and manage their account balance. 
-
-
+A terminal based stock trading platform where users can view stocks, buy and sell shares, and manage their account balance. 
 
 Note: If time allows, a Java Swing GUI will be added on top of the existing terminal logic. This would include a main window with buttons for buying and selling stocks, a table displaying available stocks and prices, and a portfolio view.
 
