@@ -26,3 +26,25 @@ Note: If time allows, a Java Swing GUI will be added on top of the existing term
 - java.util.HashMap - to map stock tickers to prices
 
 - java.util.Scanner - to handle user input from the terminal
+
+
+## Sprint 3
+
+### Design Patterns Implemented
+1. **Strategy Pattern** - IOrderStrategy interface with MarketOrderStrategy 
+and LimitOrderStrategy concrete classes. Allows different order execution 
+strategies to be used interchangeably.
+
+2. **Command Pattern** - ICommand interface with BuyCommand and SellCommand 
+concrete classes. TradeInvoker stores and executes commands. Encapsulates 
+each trade as a command object.
+
+### Final Submission Goals
+The final submission will demonstrate a fully working terminal-based stock 
+trading platform where a user can view stocks, place buy and sell orders 
+using different strategies, and manage their account balance. All 6 design 
+patterns will be wired together to complete these actions.
+
+### Problems
+No major problems encountered this sprint. Strategy and Command patterns 
+fit naturally into the trading platform structure.
