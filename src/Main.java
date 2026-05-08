@@ -1,28 +1,41 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Scanner;
-
 public class Main {
     public static void main(String[] args) {
-        // Demo ArrayList - will be used to store stocks
-        ArrayList<String> stocks = new ArrayList<>();
-        stocks.add("AAPL");
-        stocks.add("GOOGL");
-        stocks.add("TSLA");
-        System.out.println("Stocks list: " + stocks);
+        // Setup
+        User user = new User("Liz", "ACC001", 10000.00);
+        Market market = new Market();
 
-        // Demo HashMap - will be used to map tickers to prices
-        HashMap<String, Double> prices = new HashMap<>();
-        prices.put("AAPL", 189.50);
-        prices.put("GOOGL", 141.75);
-        prices.put("TSLA", 245.30);
-        System.out.println("Stock prices: " + prices);
+        System.out.println("=== Stock Trading Platform ===");
+        user.printInfo();
+        market.printAllStocks();
 
-        // Demo Scanner - will be used for user input
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter a stock ticker: ");
-        String input = scanner.next();
-        System.out.println("You entered: " + input + " | Price: $" + prices.get(input));
-        scanner.close();
+        // Demo Strategy Pattern
+        System.out.println("\n--- Strategy Pattern Demo ---");
+        Stock apple = market.findStock("AAPL");
+        Stock tesla = market.findStock("TSLA");
+
+        // Market Order Strategy
+        IOrderStrategy marketStrategy = new MarketOrderStrategy();
+        marketStrategy.execute(user, apple, 2);
+
+        // Limit Order Strategy - price is below limit so it executes
+        IOrderStrategy limitStrategy = new LimitOrderStrategy(250.00);
+        limitStrategy.execute(user, tesla, 1);
+
+        // Limit Order Strategy - price is above limit so it does NOT execute
+        IOrderStrategy strictLimit = new LimitOrderStrategy(100.00);
+        strictLimit.execute(user, apple, 1);
+
+        // Demo Command Pattern
+        System.out.println("\n--- Command Pattern Demo ---");
+        TradeInvoker invoker = new TradeInvoker();
+
+        Stock google = market.findStock("GOOGL");
+        invoker.addCommand(new BuyCommand(user, google, 3, new MarketOrderStrategy()));
+        invoker.addCommand(new SellCommand(user, apple, 1));
+
+        invoker.executeAll();
+
+        System.out.println("\n--- Final Account Balance ---");
+        user.printInfo();
     }
 }
