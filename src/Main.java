@@ -1,41 +1,68 @@
+import java.util.Scanner;
+
 public class Main {
     public static void main(String[] args) {
-        // Setup
-        User user = new User("Liz", "ACC001", 10000.00);
+        Scanner scanner = new Scanner(System.in);
+
+        // --- Decorator Pattern Demo ---
+        System.out.println("=== Decorator Pattern Demo ===");
+        IStock apple = new BasicStock("AAPL", 175.00);
+        IStock loggedApple = new LoggedStock(apple);
+        IStock feeApple = new FeeStock(loggedApple);
+        System.out.println("Stock: " + feeApple.getDescription());
+        System.out.println("Final price with fee: $" + String.format("%.2f", feeApple.getPrice()));
+
+        System.out.println();
+
+        // --- Observer Pattern Demo ---
+        System.out.println("=== Observer Pattern Demo ===");
         Market market = new Market();
 
-        System.out.println("=== Stock Trading Platform ===");
-        user.printInfo();
-        market.printAllStocks();
+        UserPortfolio liz = new UserPortfolio("Liz");
+        liz.addHolding("AAPL", 10);
+        liz.addHolding("TSLA", 5);
 
-        // Demo Strategy Pattern
-        System.out.println("\n--- Strategy Pattern Demo ---");
-        Stock apple = market.findStock("AAPL");
-        Stock tesla = market.findStock("TSLA");
+        UserPortfolio john = new UserPortfolio("John");
+        john.addHolding("AAPL", 20);
 
-        // Market Order Strategy
-        IOrderStrategy marketStrategy = new MarketOrderStrategy();
-        marketStrategy.execute(user, apple, 2);
+        market.attach(liz);
+        market.attach(john);
 
-        // Limit Order Strategy - price is below limit so it executes
-        IOrderStrategy limitStrategy = new LimitOrderStrategy(250.00);
-        limitStrategy.execute(user, tesla, 1);
+        market.setStockPrice("AAPL", 180.00);
+        System.out.println();
+        market.setStockPrice("TSLA", 250.00);
 
-        // Limit Order Strategy - price is above limit so it does NOT execute
-        IOrderStrategy strictLimit = new LimitOrderStrategy(100.00);
-        strictLimit.execute(user, apple, 1);
+        System.out.println();
 
-        // Demo Command Pattern
-        System.out.println("\n--- Command Pattern Demo ---");
-        TradeInvoker invoker = new TradeInvoker();
+        // --- Menu ---
+        boolean running = true;
+        while (running) {
+            System.out.println("\n=== Stock Trading Platform ===");
+            System.out.println("1. Update stock price");
+            System.out.println("2. View all stock prices");
+            System.out.println("3. Exit");
+            System.out.print("Choice: ");
+            String choice = scanner.nextLine();
 
-        Stock google = market.findStock("GOOGL");
-        invoker.addCommand(new BuyCommand(user, google, 3, new MarketOrderStrategy()));
-        invoker.addCommand(new SellCommand(user, apple, 1));
-
-        invoker.executeAll();
-
-        System.out.println("\n--- Final Account Balance ---");
-        user.printInfo();
+            switch (choice) {
+                case "1":
+                    System.out.print("Enter ticker: ");
+                    String ticker = scanner.nextLine().toUpperCase();
+                    System.out.print("Enter new price: ");
+                    double price = Double.parseDouble(scanner.nextLine());
+                    market.setStockPrice(ticker, price);
+                    break;
+                case "2":
+                    System.out.println("Current prices: " + market.getAllPrices());
+                    break;
+                case "3":
+                    running = false;
+                    System.out.println("Goodbye!");
+                    break;
+                default:
+                    System.out.println("Invalid option.");
+            }
+        }
+        scanner.close();
     }
 }
