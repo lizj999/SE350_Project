@@ -1,34 +1,42 @@
 import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 
-public class Market {
-    private List<Stock> stocks;
+// Observer Pattern - Concrete Subject
+// The Market holds stock prices and notifies observers when prices change
+public class Market implements ISubject {
+    private HashMap<String, Double> stockPrices = new HashMap<>();
+    private ArrayList<IObserver> observers = new ArrayList<>();
 
-    public Market() {
-        stocks = new ArrayList<>();
-        stocks.add(new Stock("AAPL", "Apple Inc.", 189.50));
-        stocks.add(new Stock("GOOGL", "Alphabet Inc.", 141.75));
-        stocks.add(new Stock("TSLA", "Tesla Inc.", 245.30));
-        stocks.add(new Stock("AMZN", "Amazon.com Inc.", 185.20));
+    public void setStockPrice(String ticker, double price) {
+        stockPrices.put(ticker, price);
+        System.out.println("[Market] " + ticker + " price updated to $" + price);
+        notifyObservers();
     }
 
-    public List<Stock> getStocks() {
-        return stocks;
+    public double getStockPrice(String ticker) {
+        return stockPrices.getOrDefault(ticker, 0.0);
     }
 
-    public Stock findStock(String ticker) {
-        for (Stock s : stocks) {
-            if (s.getTicker().equalsIgnoreCase(ticker)) {
-                return s;
+    public HashMap<String, Double> getAllPrices() {
+        return stockPrices;
+    }
+
+    @Override
+    public void attach(IObserver observer) {
+        observers.add(observer);
+    }
+
+    @Override
+    public void detach(IObserver observer) {
+        observers.remove(observer);
+    }
+
+    @Override
+    public void notifyObservers() {
+        for (IObserver observer : observers) {
+            for (String ticker : stockPrices.keySet()) {
+                observer.update(ticker, stockPrices.get(ticker));
             }
-        }
-        return null;
-    }
-
-    public void printAllStocks() {
-        System.out.println("\n--- Available Stocks ---");
-        for (Stock s : stocks) {
-            s.printInfo();
         }
     }
 }
