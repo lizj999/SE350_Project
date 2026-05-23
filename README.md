@@ -48,3 +48,27 @@ patterns will be wired together to complete these actions.
 ### Problems
 No major problems encountered this sprint. Strategy and Command patterns 
 fit naturally into the trading platform structure.
+
+
+
+## Sprint 4 Design Patterns
+
+### Observer Pattern
+- IObserver, ISubject - abstract interfaces
+- Market - Concrete Subject; holds stock prices and notifies observers on change
+- UserPortfolio - Concrete Observer; prints updated portfolio value when prices change
+
+### Decorator Pattern
+- IStock - Abstract Component interface
+- BasicStock - Concrete Component; plain stock with ticker and price
+- StockDecorator - Abstract Decorator; wraps any IStock
+- LoggedStock - Concrete Decorator; logs every price access
+- FeeStock - Concrete Decorator; adds 1.5% transaction fee to price
+
+## Sprint 4 Final Submission Plan
+Planning to demo a working terminal menu where users can update stock prices,
+see live updates pushed to their portfolio via Observer, and apply fee/logging
+decorators to any stock.
+
+## Sprint 4 Issues
+No major issues. Observer integrates cleanly with the existing Market class.
