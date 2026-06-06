@@ -72,3 +72,23 @@ decorators to any stock.
 
 ## Sprint 4 Issues
 No major issues. Observer integrates cleanly with the existing Market class.
+
+## Sprint 5 Design Patterns
+
+### Template Method Pattern
+- TradeReport - Abstract Class; defines the fixed skeleton: gatherData, formatReport, printReport
+- BuyReport - Concrete Class; implements the steps for a buy trade report
+- SellReport - Concrete Class; implements the steps for a sell trade report
+
+### Proxy Pattern
+- IMarketData - Abstract Interface shared by Proxy and Real Object
+- RealMarketData - Real Object; loads and holds actual stock prices
+- MarketDataProxy - Proxy Object; caches prices and defers to RealMarketData only when needed
+
+## Sprint 5 Final Submission Plan
+Planning to demo the full terminal menu showing all 6 patterns working together:
+buy/sell commands, price updates via Observer, decorated stocks with fees,
+trade reports via Template Method, and cached price lookups via Proxy.
+
+## Sprint 5 Issues
+No major issues. All 6 patterns integrate cleanly into the stock trading platform.
