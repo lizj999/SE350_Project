@@ -92,3 +92,29 @@ trade reports via Template Method, and cached price lookups via Proxy.
 
 ## Sprint 5 Issues
 No major issues. All 6 patterns integrate cleanly into the stock trading platform.
+
+## Final Submission Notes
+
+### Incomplete Functionality
+- No GUI implemented, the program runs as a terminal based application
+- User accounts and authentication not implemented
+- No real live stock price data, prices are hardcoded or manually entered
+
+### Known Bugs
+- No known bugs at this time, all 6 patterns compile and run successfully
+
+### GitHub Repo
+https://github.com/lizj999/SE350_Project
+
+## Final Submission Notes
+
+### Incomplete Functionality
+- No GUI implemented, the program runs as a terminal based application
+- User accounts and authentication not implemented
+- No real live stock price data, prices are hardcoded or manually entered
+
+### Known Bugs
+- No known bugs at this time, all 6 patterns compile and run successfully
+
+### GitHub Repo
+https://github.com/lizj999/SE350_Project
